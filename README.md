@@ -33,7 +33,11 @@ In the terminal, navigate to the folder you just created and enter the following
 ```python
 pip install -r requirements.txt
 ```
-
+### Manual installation
+If installing from the requirements.txt did not work for you, you can also manually install the modules by entering the following line in your terminal. 
+```python
+pip install pandas numpy gensim keras keras_tuner contractions nltk
+```
 ## Usage
 ### Downloading data
 We have provided a small sample (100) of the cleaned dataset for you to train on, as the whole dataset is too big to upload on GitHub.\
@@ -65,7 +69,9 @@ python baseline_model.py
 ```
 Some short explanation of model / code implementation maybe?
 #### Evaluation
-To evaluate the results of the model
-
-#### Discussion
+To evaluate the results of the model run the 'evaluation.py' file in your terminal as follows:
+```
+python evaluation.py
+```
+## Discussion
 
