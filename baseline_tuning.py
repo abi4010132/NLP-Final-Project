@@ -72,7 +72,7 @@ def custom_loss(y_true, y_pred):
     return loss
 
 
-def build_model(hp, vocab, embedding_matrix):
+def build_model(hp):
     # LSTM units
     dimensionality = hp.Choice("dimensionality", [64, 128, 256, 512])
     num_layers = hp.Choice("num_layers", ["1", "2"])
@@ -126,7 +126,8 @@ def main():
     data_test = data_all.drop(data_train.index)
     data_val = data_test.sample(frac=0.5,random_state=0)
     data_test = data_test.drop(data_val.index)
-
+    global embedding_matrix
+    global vocab
     embedding_matrix, w2v, vocab = create_embeddings(data_train)
     encoder_input_data_train, decoder_input_data_train, decoder_output_data_train = create_sparse_encoding(w2v, vocab, data_train)
     encoder_input_data_val, decoder_input_data_val, decoder_output_data_val = create_sparse_encoding(w2v, vocab, data_val)
