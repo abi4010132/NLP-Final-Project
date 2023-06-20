@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 from keras.models import Model
-from keras.layers import Input, LSTM, Dense, Embedding, Activation
+from keras.layers import Input, LSTM, Dense, Embedding, Activation, concatenate
 from keras.losses import SparseCategoricalCrossentropy
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from gensim.models import Word2Vec
@@ -90,7 +90,7 @@ def build_model(hp, data):
     context = np.dot([attention, encoder_outputs], axes=[2, 1])
         
     # Concatenate context vector and hidden decoder states
-    context_decoder_outputs = np.concatenate([context, decoder_outputs])
+    context_decoder_outputs = concatenate([context, decoder_outputs])
 
     decoder_dense = Dense(len(vocab), activation='softmax')
 
@@ -130,14 +130,14 @@ def build_model(hp, data):
     decoder_context_inputs = Input(shape=(None, DIMENSIONALITY))
 
     # compute allignment and attention scores
-    allignment = np.dot([decoder_outputs, decoder_context_inputs], axes=[2, 2])
+    allignment = dot([decoder_outputs, decoder_context_inputs], axes=[2, 2])
     attention = Activation('softmax')(allignment)
 
     # context vector is dot product allignment scores and encoder hidden states
-    context_infer = np.dot([attention, decoder_context_inputs], axes=[2, 1])
+    context_infer = dot([attention, decoder_context_inputs], axes=[2, 1])
 
     # Concatenate context vector and hidden decoder states
-    decoder_context_outputs = np.concatenate([context_infer, decoder_outputs])
+    decoder_context_outputs = concatenate([context_infer, decoder_outputs])
 
     # Get the decoder predictions
     decoder_outputs = decoder_dense(decoder_context_outputs)
