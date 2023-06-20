@@ -35,7 +35,7 @@ pip install -r requirements.txt
 ```
 ## Downloading data
 We have provided a small sample (100) of the dataset for you to train on.\
-If you would like to train on the whole dataset, you can download it from [here](https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset?select=single_qna.csv).\
+If you would like to train on the whole dataset, you can download it from [here](https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset?select=single_qna.csv).
 
 ## Usage
 To reproduce our results, you can run the 'main.py' file as follows:
