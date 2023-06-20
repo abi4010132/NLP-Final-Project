@@ -40,14 +40,14 @@ We have provided a small sample (100) of the cleaned dataset for you to train on
 If you would like to reproduce the data cleaning process, you can download the whole dataset from [here](https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset?select=single_qna.csv).
 Make sure you store it in the data folder.
 ## Run whole process
-To reproduce our results, you can run the 'main.py' file as follows:
+To reproduce our results, you can run the 'main.py' file in your terminal as follows:
 ```python
 python main.py
 ```
 This script runs all functions defined in the other scripts of the repository, to build, train and evaluate the results of the model.
 ## Individual steps
 ### Data cleaning
-The data cleaning can be done by running the 'clean_data.py' file as follows:
+The data cleaning can be done by running the 'clean_data.py' file in your terminal as follows:
 ```python
 python clean_data.py
 ```
