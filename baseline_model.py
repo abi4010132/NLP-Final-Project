@@ -64,8 +64,7 @@ def create_sparse_encoding(w2v, vocab, data):
     
     return encoder_input_data, decoder_input_data, decoder_output_data
 
-def get_model(data):
-    
+def get_model(data):    
     embedding_matrix, w2v, vocab = create_embeddings(data)
 
     #Encoder
@@ -160,27 +159,7 @@ def generate_sequence(input_sequence, encoder_model, decoder_model, w2v):
 def predict(test, train, encoder_model, decoder_model, w2v):
     maximum_length_output = np.max([len(d) for d in train["Answer"]])
     vocab = w2v.wv
-    predictions = []
-
-    for idx, line in test.iterrows():
-        if (idx % 100 == 0):     
-            print("progress:", idx/len(test))
-            
-        words_input_indices = [(w2v.wv.key_to_index[w] if w in vocab else 0) for w in line["Question"]]
-        words_input_indices_padded = np.pad(words_input_indices, (0, maximum_length_output - len(words_input_indices)))
-        # Example input sequence
-        input_sequence = words_input_indices_padded[np.newaxis, :]
-        # Generate the output sequence
-        output_sequence = generate_sequence(input_sequence, encoder_model, decoder_model, w2v)
-        predictions.append(output_sequence)
-        
-    test["Predicted Answer Baseline"] = predictions
-    test.to_csv('results_baseline.csv', index=False)
-
-    # Save the dataframe to a file
-    with open('results_baseline.pickle', 'wb') as file:
-        pickle.dump(test, file)
-
+    
     sample_data = test["Question"].sample(20)
 
     myfile = open('sample_results-baseline.txt', 'w')
@@ -204,6 +183,29 @@ def predict(test, train, encoder_model, decoder_model, w2v):
         myfile.writelines(sequence + "\n")
 
     myfile.close
+    
+    print("patience: predicting on test set")
+    predictions = []
+
+    for idx, line in test.iterrows():
+        if (idx % 100 == 0):     
+            print("progress:", idx/len(test))
+            
+        words_input_indices = [(w2v.wv.key_to_index[w] if w in vocab else 0) for w in line["Question"]]
+        words_input_indices_padded = np.pad(words_input_indices, (0, maximum_length_output - len(words_input_indices)))
+        # Example input sequence
+        input_sequence = words_input_indices_padded[np.newaxis, :]
+        # Generate the output sequence
+        output_sequence = generate_sequence(input_sequence, encoder_model, decoder_model, w2v)
+        predictions.append(output_sequence)
+        
+    test["Predicted Answer Baseline"] = predictions
+    test.to_csv('results_baseline.csv', index=False)
+
+    # Save the dataframe to a file
+    with open('results_baseline.pickle', 'wb') as file:
+        pickle.dump(test, file)
+
 
 def main():
     train = get_data('train.csv')
