@@ -57,7 +57,7 @@ def create_sparse_encoding(w2v, vocab, data):
     
     arr1 = decoder_input_data[:,1:]
     arr2 = decoder_input_data[:,-1:]
-    decoder_output_data = np.concatenate((arr1, arr2), axis=1)
+    decoder_output_data = Concatenate((arr1, arr2), axis=1)
     print("Done with vectors")
     
     return encoder_input_data, decoder_input_data, decoder_output_data
