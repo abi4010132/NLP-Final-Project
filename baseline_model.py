@@ -13,8 +13,6 @@ DIMENSIONALITY = 128
 BATCH_SIZE = 32
 EPOCHS = 2
 EMBEDDING_DIM = 100
-w2v = None
-vocab = None
 print("Done with libs.")
 
 def get_data(filename):
@@ -66,7 +64,7 @@ def create_sparse_encoding(w2v, vocab, data):
     
     return encoder_input_data, decoder_input_data, decoder_output_data
 
-def build_model(hp, data):
+def get_model(data):
     
     embedding_matrix, w2v, vocab = create_embeddings(data)
 
@@ -127,10 +125,10 @@ def build_model(hp, data):
     decoder_outputs = decoder_dense(decoder_outputs)
 
     decoder_model = Model([decoder_inputs] + decoder_states_inputs, [decoder_outputs] + decoder_states)
-    return decoder_model
+    return training_model, encoder_model, decoder_model
 
 # Generate sequence
-def generate_sequence(input_sequence, encoder_model, decoder_model):
+def generate_sequence(input_sequence, encoder_model, decoder_model, w2v):
     # Encode the input sequence
     states_value = encoder_model.predict(input_sequence, verbose=False)
 
@@ -159,10 +157,9 @@ def generate_sequence(input_sequence, encoder_model, decoder_model):
 
     return np.array(output_sequence)
 
-def predict(test, train, w2v):
+def predict(test, train, encoder_model, decoder_model, w2v):
     maximum_length_output = np.max([len(d) for d in train["Answer"]])
     vocab = w2v.wv
-    
     predictions = []
 
     for idx, line in test.iterrows():
@@ -174,7 +171,7 @@ def predict(test, train, w2v):
         # Example input sequence
         input_sequence = words_input_indices_padded[np.newaxis, :]
         # Generate the output sequence
-        output_sequence = generate_sequence(input_sequence)
+        output_sequence = generate_sequence(input_sequence, encoder_model, decoder_model, w2v)
         predictions.append(output_sequence)
         
     test["Predicted Answer Baseline"] = predictions
@@ -194,7 +191,7 @@ def predict(test, train, w2v):
         # Example input sequence
         input_sequence = words_input_indices_padded[np.newaxis, :]
         # Generate the output sequence
-        output_sequence = generate_sequence(input_sequence)
+        output_sequence = generate_sequence(input_sequence, encoder_model, decoder_model, w2v)
         sequence = ""
         for word in q:
             sequence += " " + word
@@ -214,8 +211,8 @@ def main():
 
     sentences = train['Question'] + train['Answer']
     w2v = Word2Vec(sentences=sentences, min_count=1, vector_size=EMBEDDING_DIM, workers=8)
-    model = build_model()
-    predict(test, train, w2v)
+    training_model, encoder_model, decoder_model = get_model(train)
+    predict(test, train, encoder_model, decoder_model, w2v)
 
 if __name__ == "__main__":
     main()
