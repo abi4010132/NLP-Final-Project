@@ -48,7 +48,8 @@ To reproduce our results, you can run the 'main.py' file in your terminal as fol
 ```python
 python main.py
 ```
-This script will perform all the individual steps listed one by one.
+This script will perform the whole process from data cleaning to model evaluation.\
+If this does not work for you, the process is also reproducable by following the individual steps listed below.
 ### Individual steps
 #### Data cleaning
 The data cleaning can be done by running the 'clean_data.py' file in your terminal as follows:
