@@ -65,7 +65,7 @@ Some short explanation of model / code implementation maybe?
 #### Attention model
 The Attention model can be run by running the 'baseline_model.py' file in your terminal as follows:
 ```
-python baseline_model.py
+python attention_model.py
 ```
 Some short explanation of model / code implementation maybe?
 #### Evaluation
