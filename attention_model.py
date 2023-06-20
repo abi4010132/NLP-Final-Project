@@ -60,12 +60,12 @@ def create_sparse_encoding(w2v, vocab, data):
     
     arr1 = decoder_input_data[:,1:]
     arr2 = decoder_input_data[:,-1:]
-    decoder_output_data = np.concatenate((arr1, arr2), axis=1)
+    decoder_output_data = concatenate((arr1, arr2), axis=1)
     print("Done with vectors")
     
     return encoder_input_data, decoder_input_data, decoder_output_data
 
-def build_model(data):
+def get_model(data):
     
     embedding_matrix, w2v, vocab = create_embeddings(data)
 
@@ -143,31 +143,33 @@ def build_model(data):
     decoder_outputs = decoder_dense(decoder_context_outputs)
 
     decoder_model = Model([decoder_inputs] + [decoder_context_inputs] + decoder_states_inputs, [decoder_outputs] + decoder_states)
-    return decoder_model
+    return training_model, encoder_model, decoder_model
 
 # Generate sequence
-def generate_sequence(input_sequence, encoder_model, decoder_model):
+def generate_sequence(input_sequence, encoder_model, decoder_model, w2v):
     # Encode the input sequence
-    states_value = encoder_model.predict(input_sequence, verbose=False)
+    dec_context, state_h, state_c  = encoder_model.predict(input_sequence, verbose=False)
+    states_value = [state_h, state_c]
 
     # Initialize the target sequence with a start token
     target_sequence = np.zeros((1, 1, 1))
     target_sequence[0, 0, :] = w2v.wv.key_to_index["<sos>"]
-    START_TOKEN = w2v.wv.key_to_index["<sos>"]
-    END_TOKEN = w2v.wv.key_to_index["<eos>"]
+
     # Generate the output sequence
     output_sequence = []
     end_condition = False
     i = 0
-    while i < MAXIMUM_LENGTH and not end_condition:
-        i+=1
-        decoder_output, state_hidden, state_cell = decoder_model.predict([target_sequence] + states_value, verbose=False)
+    while not end_condition:
+        decoder_output, state_hidden, state_cell = decoder_model.predict([target_sequence] + [dec_context] + states_value, verbose=False)
         output_token = decoder_output[0, -1, :]
         index = np.argmax(output_token)
-        if index == END_TOKEN:
-            end_condition = True
         word = w2v.wv.index_to_key[index]
         output_sequence.append(word)
+        
+        if (word == '<eos>' or
+           len(output_sequence) > MAXIMUM_LENGTH): 
+            end_condition = True
+            
         target_sequence = np.zeros((1, 1, 1))
         target_sequence[0, 0, :] = index
         # Update the states value
@@ -175,12 +177,11 @@ def generate_sequence(input_sequence, encoder_model, decoder_model):
 
     return np.array(output_sequence)
 
-def predict(test, train, w2v):
+def predict(test, train, w2v, encoder_model, decoder_model):
     maximum_length_output = np.max([len(d) for d in train["Answer"]])
     vocab = w2v.wv
     
     predictions = []
-
     for idx, line in test.iterrows():
         if (idx % 100 == 0):     
             print("progress:", idx/len(test))
@@ -190,7 +191,7 @@ def predict(test, train, w2v):
         # Example input sequence
         input_sequence = words_input_indices_padded[np.newaxis, :]
         # Generate the output sequence
-        output_sequence = generate_sequence(input_sequence)
+        output_sequence = generate_sequence(input_sequence, encoder_model, decoder_model, w2v)
         predictions.append(output_sequence)
         
     test["Predicted Answer Baseline"] = predictions
@@ -199,8 +200,8 @@ def predict(test, train, w2v):
     # Save the dataframe to a file
     with open('results_baseline.pickle', 'wb') as file:
         pickle.dump(test, file)
-
-    sample_data = test["Question"].sample(20)
+        
+    sample_data = train["Question"].sample(20)
 
     myfile = open('sample_results-baseline.txt', 'w')
 
@@ -210,7 +211,7 @@ def predict(test, train, w2v):
         # Example input sequence
         input_sequence = words_input_indices_padded[np.newaxis, :]
         # Generate the output sequence
-        output_sequence = generate_sequence(input_sequence)
+        output_sequence = generate_sequence(input_sequence, encoder_model, decoder_model, w2v)
         sequence = ""
         for word in q:
             sequence += " " + word
@@ -230,8 +231,8 @@ def main():
 
     sentences = train['Question'] + train['Answer']
     w2v = Word2Vec(sentences=sentences, min_count=1, vector_size=EMBEDDING_DIM, workers=8)
-    model = build_model(train)
-    predict(test, train, w2v)
-
+    training_model, encoder_model, decoder_model = get_model(train)
+    predict(test, train, w2v, encoder_model, decoder_model)
+    
 if __name__ == "__main__":
     main()
