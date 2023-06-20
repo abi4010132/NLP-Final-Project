@@ -50,7 +50,12 @@ The data cleaning can be done by running the 'clean_data.py' file in your termin
 ```python
 python clean_data.py
 ```
-**NOTE**: Don't forget to download the dataset from kaggle if you want to reproduce the cleaning process.  
+**NOTE**: Don't forget to download the dataset from kaggle if you want to reproduce the cleaning process. 
+### Split the data into train/test
+To split the dataset into train and test data run the 'split_data.py' file in your terminal as follows:
+```python
+python split_data.py
+```
 #### Baseline model hyperparameter gridsearch 
 The baseline model hyperparameter tuning script can be run by running the 'baseline_tuning.py' file in your terminal as follows:
 ```python
