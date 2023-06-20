@@ -29,7 +29,7 @@ pipenv install -r requirements.txt
 ```
 
 ### No virtual environment
-Navigate to the folder you created in the terminal and enter the following line:
+In the terminal, navigate to the folder you just created and enter the following line:
 ```python
 pip install -r requirements.txt
 ```
