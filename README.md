@@ -62,13 +62,13 @@ The Baseline model can be run by running the 'baseline_model.py' file in your te
 ```
 python baseline_model.py
 ```
-Some short explanation of model / code implementation maybe?
+This code represents a model for sequence-to-sequence (Seq2Seq) learning using an encoder-decoder architecture with LSTM layers and Word2Vec embeddings. The model is trained on a dataset consisting of question-and-answer pairs. 
 #### Attention model
 The Attention model can be run by running the 'baseline_model.py' file in your terminal as follows:
 ```
 python attention_model.py
 ```
-Some short explanation of model / code implementation maybe?
+This code represents a model for sequence-to-sequence (Seq2Seq) learning with Luong attention mechanism using an encoder-decoder architecture with LSTM layers and Word2Vec embeddings.
 #### Evaluation
 To evaluate the results of the model run the 'evaluation.py' file in your terminal as follows:
 ```
