@@ -1,6 +1,6 @@
 # NLP-Final-Project
 
-This is the final project of group 7, a customer support chatbot trained on Amazon customer support question-answer data.
+This is the final project of group 7, a chatbot trained on Amazon customer support question-answer data.
 #### Group 7: Jakub Ondrejka, Matthijs Jongbloed, Michal Tesnar & Abi Raveenthiran
 
 ## Installation 
