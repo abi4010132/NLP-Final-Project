@@ -43,26 +43,30 @@ pip install pandas numpy gensim keras keras_tuner contractions nltk tensorflow
 We have provided a small sample (100) of the cleaned dataset for you to train on, as the whole dataset is too big to upload on GitHub.\
 You can download the whole dataset from [here](https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset?select=single_qna.csv), if you would like to reproduce the data cleaning process.\
 Make sure you store it in the data folder.
-### Run whole process
-To reproduce our results, you can run the 'main.py' file in your terminal as follows:
-```python
-python main.py
-```
-This script will perform the whole process from data cleaning to model evaluation.\
-The process is also reproducable by following the individual steps listed below.
+
 ### Individual steps
 #### Data cleaning
 The data cleaning can be done by running the 'clean_data.py' file in your terminal as follows:
 ```python
 python clean_data.py
 ```
-**NOTE**: Don't forget to download the dataset from kaggle if you want to reproduce the cleaning process.   
+**NOTE**: Don't forget to download the dataset from kaggle if you want to reproduce the cleaning process.  
+#### Baseline model hyperparameter gridsearch 
+The baseline model hyperparameter tuning script can be run by running the 'baseline_tuning.py' file in your terminal as follows:
+```python
+python baseline_tuning.py
+```
 #### Baseline model
 The Baseline model can be run by running the 'baseline_model.py' file in your terminal as follows:
 ```
 python baseline_model.py
 ```
 This code represents a model for sequence-to-sequence (Seq2Seq) learning using an encoder-decoder architecture with LSTM layers and Word2Vec embeddings. The model is trained on a dataset consisting of question-and-answer pairs. 
+#### Attention model hyperparameter gridsearch 
+The attention model hyperparameter tuning script can be run by running the 'attention_tuning.py' file in your terminal as follows:
+```python
+python attention_tuning.py
+```
 #### Attention model
 The Attention model can be run by running the 'baseline_model.py' file in your terminal as follows:
 ```
