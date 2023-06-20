@@ -11,21 +11,29 @@ from nltk.translate.nist_score import corpus_nist
 from nltk.translate import meteor
 
 def read_data():
-    df = pd.read_pickle('results_baseline.pickle')
-    df.pop("Unnamed: 0")
-    df.pop("Question")
-    for index, row in df.iterrows():
+   #loading the pickle file with results, and preprocesing them so they can be used by the methods for evaluation
+    #basline data
+    df_baseline = pd.read_pickle('results_baseline.pickle')
+    df_baseline.pop("Unnamed: 0")
+    df_baseline.pop("Question")
+    for index, row in df_baseline.iterrows():
         row['Answer']=[row['Answer']]
-    return df
+    #attention model data
+    df_attention = pd.read_pickle('results_attention.pickle')
+    df_attention.pop("Unnamed: 0")
+    df_attention.pop("Question")
+        for index, row in df_attention.iterrows():
+        row['Answer']=[row['Answer']]
 
-def blue_score(references, hypothesis): #both inputs are list of words(tokens)
-    score = sentence_bleu(references, hypothesis,(0.5, 0.5, 0, 0)) # we can change the weights=(1, 0, 0, 0) if we want to prioritize different n-grams
+#helper functions for the individual metrics
+def blue_score(references, hypothesis):
+    score = sentence_bleu(references, hypothesis,(0.5, 0.5, 0, 0)) 
     return(score)
 def nist_score(references, hypothesis):
-    score = sentence_nist(references, hypothesis,2) # we can change the n=... if we want to prioritize different n-grams
+    score = sentence_nist(references, hypothesis,2)
     return(score)
 def meteor_score(references, hypothesis):
-    score = meteor(references, hypothesis) # we can change the n=... if we want to prioritize different n-grams
+    score = meteor(references, hypothesis) 
     return(score)
 def corpus_meteor(expected, predicted):
     meteor_score_sentences_list = list()
@@ -34,28 +42,23 @@ def corpus_meteor(expected, predicted):
     return meteor_score_res
 
 def main():
-    df = read_data()
-    blueScore= corpus_bleu(df['Answer'].tolist(),df['Predicted Answer Baseline'].tolist())
-    print("blue> ", blueScore)
-    nistScore= corpus_nist(df['Answer'].tolist(),df['Predicted Answer Baseline'].tolist(),n=4)
-    print("nist> ", nistScore)
-    meteorScore= corpus_meteor(df['Answer'],df['Predicted Answer Baseline'])
-    print("meteor> ", meteorScore)
+ #corpus scores for baseline
+print("Baseline model")
+blueScore= corpus_bleu(df_baseline['Answer'].tolist(),df_baseline['Predicted Answer Baseline'].tolist())
+print("blue> ", blueScore)
+nistScore= corpus_nist(df_baseline['Answer'].tolist(),df_baseline['Predicted Answer Baseline'].tolist(),n=2)
+print("nist> ", nistScore)
+meteorScore= corpus_meteor(df_baseline['Answer'],df_baseline['Predicted Answer Baseline'])
+print("meteor> ", meteorScore)
 
-    blues=0
-    nists=0
-    mateors=0
-    for index, row in df.iterrows():
-        blues+=blue_score(row['Answer'], row['Predicted Answer Baseline'])
-        nists+=nist_score(row['Answer'], row['Predicted Answer Baseline'])
-        mateors+=meteor_score(row['Answer'], row['Predicted Answer Baseline'])
-    blues=blues/len(df['Answer'])
-    nists=nists/len(df['Answer'])
-    mateors=mateors/len(df['Answer'])
-    print("-------")
-    print("blue> ", blues)
-    print("nist> ", nists)
-    print("meteor> ", mateors)
+#corpus scores for attention
+print("Attention model")
+blueScore= corpus_bleu(df_attention['Answer'].tolist(),df_attention['Predicted Answer'].tolist())
+print("blue> ", blueScore)
+nistScore= corpus_nist(df_attention['Answer'].tolist(),df_attention['Predicted Answer'].tolist(),n=2)
+print("nist> ", nistScore)
+meteorScore= corpus_meteor(df_attention['Answer'],df_attention['Predicted Answer'])
+print("meteor> ", meteorScore)
 
 if __name__ == "__main__":
     main()
