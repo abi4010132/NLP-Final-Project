@@ -29,16 +29,6 @@ def add_sos_eos(text):
 def fix_contractions(text):
     return contractions.fix(text)
 
-# These functions did not end up being used
-# def fix_spelling(words):
-#     return [str(TextBlob(word).correct()) for word in words]
-# def remove_stop_words(text):
-#     stop_words = set(stopwords.words('english'))
-#     return list(filter(lambda a: a not in stop_words, text[0:-1]))
-# def lemmatize(text):
-#     lemmatizer = WordNetLemmatizer()
-#     return list(lemmatizer.lemmatize(token) for token in text[0:-1])
-
 def main():
     data = pd.read_csv('data/single_qna.csv')
     data = data[['Question', 'Answer']]
@@ -54,15 +44,8 @@ def main():
         print("Lower cased!")
         data.loc[:,name] = data.loc[:,name].apply(remove_numbers)
         print("Removed numbers :)")
-        # data.loc[:,name] = data.loc[:,name].apply(tokenize) # from now on tokens
-        # print("Tokenized!")
-        # data.loc[:,name] = data.loc[:,name].apply(remove_stop_words) ---> we do not want this
-        # print("Removed stop words!")
-        # data.loc[:,name] = data.loc[:,name].apply(lemmatize) ---> we do not want this
-        # print("Lemmatized!")
-        # data.loc[:,name] = data.loc[:,name].apply(fix_spelling) ---> takes too much time
-        # print("Fixed spelling...")
-        # data.loc[:,name] = data.loc[:,name].apply(add_sos_eos)
+        data.loc[:,name] = data.loc[:,name].apply(tokenize) # from now on tokens
+        print("Tokenized!")
         print("Added starting and finishing tokens...")
     
     data.to_csv('data/single_qna_clean_data.csv')
