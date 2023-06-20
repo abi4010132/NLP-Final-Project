@@ -5,7 +5,7 @@ This is the final project of group 7, a customer support chatbot trained on Amaz
 
 ## Installation 
 Download and unzip the main branch of this repository.\
-Then, we recommend to use a virtual environment to install the required packages.\
+Then, we recommend to use a virtual environment to install the required modules.\
 If you don't want to use a virtual environment skip to [No virtual environment](#no-virtual-environment).
 
 ### Virtual environment
