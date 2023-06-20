@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 from keras.models import Model
-from keras.layers import Input, LSTM, Dense, Embedding, Activation, concatenate
+from keras.layers import Input, LSTM, Dense, Embedding, Activation, dot, concatenate
 from keras.losses import SparseCategoricalCrossentropy
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from gensim.models import Word2Vec
@@ -65,7 +65,7 @@ def create_sparse_encoding(w2v, vocab, data):
     
     return encoder_input_data, decoder_input_data, decoder_output_data
 
-def build_model(hp, data):
+def build_model(data):
     
     embedding_matrix, w2v, vocab = create_embeddings(data)
 
@@ -83,11 +83,11 @@ def build_model(hp, data):
 
     # Luong Attention 
     # allignment scores are dot product hidden states encoder/decoder
-    allignment = np.dot([decoder_outputs, encoder_outputs], axes=[2, 2])
+    allignment = dot([decoder_outputs, encoder_outputs], axes=[2, 2])
     attention = Activation('softmax')(allignment)
 
     # context vector is dot product allignment scores and encoder hidden states
-    context = np.dot([attention, encoder_outputs], axes=[2, 1])
+    context = dot([attention, encoder_outputs], axes=[2, 1])
         
     # Concatenate context vector and hidden decoder states
     context_decoder_outputs = concatenate([context, decoder_outputs])
@@ -230,5 +230,8 @@ def main():
 
     sentences = train['Question'] + train['Answer']
     w2v = Word2Vec(sentences=sentences, min_count=1, vector_size=EMBEDDING_DIM, workers=8)
-    model = build_model()
+    model = build_model(train)
     predict(test, train, w2v)
+
+if __name__ == "__main__":
+    main()
