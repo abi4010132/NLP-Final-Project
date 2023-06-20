@@ -1,3 +1,8 @@
+
+# Dataset taken from https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset
+
+# This includes two sets, one with question-answer pairs, another one with multiple answers to a question. For now, we are using only the first one, but if need be, we can also make question answer pairs from the second one.
+
 import pandas as pd
 import numpy as np
 import nltk
@@ -45,7 +50,7 @@ def main():
         data.loc[:,name] = data.loc[:,name].apply(remove_numbers)
         print("Removed numbers :)")
         data.loc[:,name] = data.loc[:,name].apply(tokenize) # from now on tokens
-        print("Tokenized!")
+        data.loc[:,name] = data.loc[:,name].apply(add_sos_eos)
         print("Added starting and finishing tokens...")
     
     data.to_csv('data/single_qna_clean_data.csv')
