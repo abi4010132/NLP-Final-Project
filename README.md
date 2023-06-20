@@ -36,7 +36,7 @@ pip install -r requirements.txt
 ### Manual installation
 If installing from the requirements.txt did not work for you, you can also manually install the modules by entering the following line in your terminal. 
 ```python
-pip install pandas numpy gensim keras keras_tuner contractions nltk
+pip install pandas numpy gensim keras keras_tuner contractions nltk tensorflow
 ```
 ## Usage
 ### Downloading data
