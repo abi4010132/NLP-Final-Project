@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from gensim.models import Word2Vec
 from keras.models import Model
-from keras.layers import Input, LSTM, Dense, Embedding, dot, Activation, Concatenate
+from keras.layers import Input, LSTM, Dense, Embedding, dot, Activation, concatenate
 from keras.losses import SparseCategoricalCrossentropy
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.optimizers import Adam, RMSprop
@@ -115,7 +115,7 @@ def build_model(hp):
     context = dot([attention, encoder_outputs], axes=[2, 1])
     
     # Concatenate context vector and hidden decoder states
-    context_decoder_outputs = Concatenate([context, decoder_outputs])
+    context_decoder_outputs = concatenate([context, decoder_outputs])
 
     # Dense output layer of the model
     decoder_dense = Dense(len(vocab), activation='softmax')
