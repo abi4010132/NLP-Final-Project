@@ -34,9 +34,9 @@ Navigate to the folder you created in the terminal and enter the following line:
 pip install -r requirements.txt
 ```
 ## Downloading data
-The dataset that we used can be found [here](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon/qa/).\
-Download all the individual answer data for all categories and store them in a folder named 'json_data'.\
-Then run the following python script 'concatenate_data.py' to get the resulting .csv file 'single_qna_data.csv':
+We have provided a small sample (100) of the dataset for you to train on.\
+If you would like to train on the whole dataset, you can download it from [here](https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset?select=single_qna.csv).\
+Only download the 'single_qna.csv'. \ 
 ```python
 python concatenate_data.py
 ```
