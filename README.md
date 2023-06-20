@@ -42,4 +42,4 @@ To reproduce our results, you can run the 'main.py' file as follows:
 ```python
 python main.py
 ```
-This script runs several functions defined in the other scripts of the repository.
+This script runs all functions defined in the other scripts of the repository, to build, train and evaluate the results of the model.
