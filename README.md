@@ -51,6 +51,6 @@ The data cleaning can be done by running the 'clean_data.py' file as follows:
 ```python
 python clean_data.py
 ```
-**NOTE**: Don't forget to download the dataset from kaggle if you want to reproduce the cleaning process   
+**NOTE**: Don't forget to download the dataset from kaggle if you want to reproduce the cleaning process.   
 ### 
 
