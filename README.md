@@ -36,8 +36,8 @@ pip install -r requirements.txt
 
 ## Usage
 ### Downloading data
-We have provided a small sample (100) of the cleaned dataset for you to train on.\
-If you would like to reproduce the data cleaning process, you can download the whole dataset from [here](https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset?select=single_qna.csv).
+We have provided a small sample (100) of the cleaned dataset for you to train on, as the whole dataset is too big to upload on GitHub.\
+You can download the whole dataset from [here](https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset?select=single_qna.csv), if you would like to reproduce the data cleaning process.\
 Make sure you store it in the data folder.
 ## Run whole process
 To reproduce our results, you can run the 'main.py' file in your terminal as follows:
@@ -53,10 +53,19 @@ python clean_data.py
 ```
 **NOTE**: Don't forget to download the dataset from kaggle if you want to reproduce the cleaning process.   
 ### Baseline model
-
+The Baseline model can be run by running the 'baseline_model.py' file in your terminal as follows:
+```
+python baseline_model.py
+```
+Some short explanation of model / code implementation maybe?
 ### Attention model
-
+The Attention model can be run by running the 'baseline_model.py' file in your terminal as follows:
+```
+python baseline_model.py
+```
+Some short explanation of model / code implementation maybe?
 ### Evaluation
+To evaluate the results of the model
 
 ### Discussion
 
