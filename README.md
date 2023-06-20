@@ -48,7 +48,7 @@ To reproduce our results, you can run the 'main.py' file in your terminal as fol
 ```python
 python main.py
 ```
-This script runs all functions defined in the other scripts of the repository, to build, train and evaluate the results of the model.
+This script will perform all the individual steps listed one by one.
 ### Individual steps
 #### Data cleaning
 The data cleaning can be done by running the 'clean_data.py' file in your terminal as follows:
@@ -74,5 +74,5 @@ To evaluate the results of the model run the 'evaluation.py' file in your termin
 python evaluation.py
 ```
 This will print the scores of the three evaluation metrics that we use: BLEU, NIST and METEOR.
-## Discussion
+## Improvements
 
