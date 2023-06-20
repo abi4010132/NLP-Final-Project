@@ -33,9 +33,15 @@ Navigate to the folder you created in the terminal and enter the following line:
 ```python
 pip install -r requirements.txt
 ```
-
+## Downloading data
+The dataset that we used can be found [here](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon/qa/).
+Download all the individial answer data for all categories and store them in a folder named 'json_data'.
+Then run the following python script 'concatenate_data.py' to get the resulting .csv file 'single_qna_data.csv':
+```python
+  python concatenate_data.py
+```
 ## Usage
-To reproduce our results, you can run the main.py file as follows:
+To reproduce our results, you can run the 'main.py' file as follows:
 ```python
 python main.py
 ```
