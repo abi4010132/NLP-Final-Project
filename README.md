@@ -37,7 +37,7 @@ pip install -r requirements.txt
 ## Usage
 ### Downloading data
 We have provided a small sample (100) of the cleaned dataset for you to train on.\
-If you would like to reproduce the data cleaning process, you can download the whole dataset from [here](https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset?select=single_qna.csv).
+If you would like to reproduce the data cleaning process, you can download the whole dataset from [here](https://www.kaggle.com/datasets/praneshmukhopadhyay/amazon-questionanswer-dataset?select=single_qna.csv). Make sure you store in the data in the folder.
 ## Run whole process
 To reproduce our results, you can run the 'main.py' file as follows:
 ```python
