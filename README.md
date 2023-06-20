@@ -79,5 +79,3 @@ To evaluate the results of the model run the 'evaluation.py' file in your termin
 python evaluation.py
 ```
 This will print the scores of the three evaluation metrics that we use: BLEU, NIST and METEOR.
-## Improvements
-
